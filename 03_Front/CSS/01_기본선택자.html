@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--
+        css적용방법 1 : 내부 스타일 방식
+        현재 이 문서상에 적용시키고자하는 스타일 정보들을 <styl>태그내에 기입하는 형식
+    -->
+    <style>
+        /* css영역이기 때문에 컨트롤 슬래시하면 주석처리가 다르게 됨 */
+        h1{
+            color: blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: blue;">기본선택자</h1>
+    <!-- 
+        css적용방법 2 : 인라인 스타일 방식
+        style속성을 이용해서 특정 요소마다 직접 css를 기입하는 방식
+        우선순위가 가장 높음 인라인방식 > 내부스타일 방식
+    -->
+
+    <h3>선택자란?</h3>
+    <p>
+        특정 html요소를 선택하고자 할 때 사용하는 기능 <br>
+        해당 요소를 선택해서 원하는 "스타일"과 "기능"을 적용시킬 수 있다.
+    </p>
+
+    <h3>1. 모든(전체) 선택자 : *</h3>
+    <p>현재 이 문서(DOM Tree)상에 모든 요소들을 다 선택하고자 할 때ㅣ;</p>
+</body>
+</html>
