@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Tree Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="fractalCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('fractalCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawBranch(x, y, length, angle, lineWidth, color) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            
+            const endX = x + length * Math.cos(angle);
+            const endY = y + length * Math.sin(angle);
+            
+            ctx.lineTo(endX, endY);
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+
+            if (length < 10) {
+                // Add a small green leaf at the end of small branches
+                ctx.beginPath();
+                ctx.arc(endX, endY, 3, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 255, 100, 0.5)';
+                ctx.fill();
+                return;
+            }
+
+            // Add a delay for the animation effect
+            setTimeout(() => {
+                // Branch to the right
+                drawBranch(endX, endY, length * (0.75 + Math.random() * 0.1), angle + (Math.random() * 0.5 - 0.25), lineWidth * 0.7, 'rgba(255, 255, 255, 0.7)');
+            }, 30 + Math.random() * 50);
+            
+            setTimeout(() => {
+                // Branch to the left
+                drawBranch(endX, endY, length * (0.75 + Math.random() * 0.1), angle - (Math.random() * 0.5 - 0.25), lineWidth * 0.7, 'rgba(255, 255, 255, 0.7)');
+            }, 30 + Math.random() * 50);
+        }
+
+        function startAnimation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const startX = canvas.width / 2;
+            const startY = canvas.height;
+            const initialLength = canvas.height / 6;
+            const initialAngle = -Math.PI / 2; // Point straight up
+            const initialWidth = 15;
+            
+            drawBranch(startX, startY, initialLength, initialAngle, initialWidth, 'rgba(255, 255, 255, 0.9)');
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // A simple way to handle resize is to restart the animation
+            // Note: This will clear any existing drawing and start over.
+            startAnimation();
+        });
+
+        // Start the drawing process
+        startAnimation();
+    </script>
+</body>
+</html>
