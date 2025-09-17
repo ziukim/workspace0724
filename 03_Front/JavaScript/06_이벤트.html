@@ -52,11 +52,11 @@
     </p>
 
     <button id="btn3" onclick="test1()">실행확인</button>
-    <button id="btn4" onclick= "document.getElementById('area2').innerHTML = '버튼4가 클릭되었습니다.'; ">실행확인</button>
-    <div id="area1" class="area"></div>
+    <button id="btn4" onclick= "document.getElementById('area2').innerHTML += '버튼4가 클릭되었습니다. <br>'; ">실행확인</button>
+    <div id="area2" class="area"></div>
     <script>
         function test1(){
-            document.getElementById('area2').innerHTML = '버튼3이 클릭되었습니다.';
+            document.getElementById('area2').innerHTML += '버튼3이 클릭되었습니다. <br>';
         }
     </script>
 
@@ -65,7 +65,7 @@
         w3c(웹 표준을 만드는 국제 기구) <br>
         공식적으로 지정한 이벤트 모델 <br>
         element.addEventListener('이벤트명', 이벤트핸들러 함수) <br>
-        동일 이벤트에 여러개의 핸들러를 등록할 수 있음 -> removeEventListener()를 통해 이벤트 제거가능(동일한 함수의 참조값을 전)
+        동일 이벤트에 여러개의 핸들러를 등록할 수 있음 -> removeEventListener()를 통해 이벤트 제거가능(동일한 함수의 참조값을 전달)
     </p>
 
     <button id="btn5">실행확인</button>
