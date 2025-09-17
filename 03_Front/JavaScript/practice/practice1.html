@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .area{
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+        }
+
+        #size-box{
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <h4>문제1.색상 선택후 변경 버튼을 클릭하면 색상이 변경되도록 만들어라</h4>
+    <div class="area" id="color-box"></div>
+    <input type="color" id="picker"> 
+    <button onclick="changeColor()">변경</button>
+    
+    <script>
+        // 어떤 이벤트가 발생했을 때, 어떤 동작을 하고싶은가?
+        // 클릭이벤트가 발생했을 때 color-box요소의 배경색을 input[color]요소의 선택된 값으로 변경하고 싶다.
+        function changeColor(){
+            const color = document.getElementById('picker').value; // "#rrggbb"
+            document.getElementById('color-box').style.backgroundColor = color;
+        }
+    </script>
+
+    <h4>문제2.버튼에 따른 크기조절이 가능하게 만들어 보세요.</h4>
+    <div class="area" id="area2"></div>
+    <button onclick="accessId1()">50x50</button>
+    <button onclick="accessId2()">100x100</button>
+    <button onclick="accessId3()">200x200</button>
+
+    <script>
+        // 크기조절 버튼이 클릭됐을 때 각 버튼별 크기로
+        function accessId1(){
+            let area1 = document.getElementById('area2');
+
+            area2.style.width = '50px'
+            area2.style.height = '50px'
+        }
+
+         function accessId2(){
+            let area1 = document.getElementById('area2');
+
+            area2.style.width = '100px'
+            area2.style.height = '100px'
+        }
+
+         function accessId3(){
+            let area1 = document.getElementById('area2');
+
+            area2.style.width = '200px'
+            area2.style.height = '200px'
+        }
+    </script>
+
+    <div id="size-box" ></div>
+    <input type="button" value="50x50" onclick="changeSize(50, 50);">
+    <input type="button" value="100x100" onclick="changeSize(100, 100);">
+    <input type="button" value="200x200" onclick="changeSize(200, 200);">
+
+    <script>
+        function changeSize(width, height){
+            const sizeBox = document.querySelector('#size-box');
+            sizeBox.style.width = width + "px";
+            sizeBox.style.height = height + "px";
+        }
+    </script>
+</body>
+</html>
