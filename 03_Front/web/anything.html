@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="test4">d</button>
+    <script>
+        let test4 = function(name){
+        //js의 함수는 기본적으로 arguments객체를 가지고있음 -> 전달받은 모든 인자값이 들어있는 배열
+        console.log(arguments)
+        console.log("test4 함수 실행")
+        console.log(name);
+        }
+
+            test4();
+            test4("최지원");
+            test4("최지원", 55);
+            test4("최지원", 55, "경기도 광명시", ' 철산2동');
+    </script>
+</body>
+</html>

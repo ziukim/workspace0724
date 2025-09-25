@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #result-view{
+            border: 1px solid black;
+            min-width: 200px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <form action="" id="buy-info-form">
+        <fieldset>
+            <legend>구매정보</legend>
+            <ul>
+                <li>
+                    구매자 :
+                    <input type="text" placeholder="구매자의 이름을 입력하세요" data-info="구매자명">
+                </li>
+                <li>
+                    상품명 :
+                    <input type="text" placeholder="구매 상품 명을 입력하세요" data-info="상품명">
+                </li>
+                <li>
+                    가격 :
+                    <input type="number" placeholder="구매 가격을 입력하세요" data-info="가격">
+                </li>
+                <li>
+                    구매수량 :
+                    <input type="number" placeholder="최소 10" min="10" max="100" step="10" data-info="구매수량">
+                </li>
+                <li>
+                    납품등급 :
+                    <input type="range" value="1" min="1" max="9" step="2" data-info="납품등급">
+                </li>
+                <li>
+                    기타사항 :
+                    <textarea data-info="기타사항"></textarea>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+
+    <br>
+
+    <button onclick="printResult();">입력값 출력하기</button>
+
+    <br><br>
+
+    <div id="result-view"></div>
+    <script>
+        /*
+            Element.children : 특정요소 내부에있는 요소목록(element)을 배열로 반환
+            Element.childNodes : 특정요소 내부에있는 모든 자식노드(태그, 텍스트, 주석, 공백, 줄바꿈, ...)전부를 배열로 반환
+        */
+        function printResult(){
+            const resultView = document.querySelector("#result-view");
+            const buyInfoliArr = document.querySelectorAll("#buy-info-form li");
+
+            console.log(buyInfoliArr);
+            let result = "";
+            for(let i=0; i<buyInfoliArr.length; i++){
+                const info = buyInfoliArr[i].children[0].dataset.info + " : " + buyInfoliArr[i].children.value;
+                result += (info + "<br>");
+            }
+            resultView.innerHTML = result;
+        }
+    </script>
+</body>
+</html>

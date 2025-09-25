@@ -1,0 +1,272 @@
+/* =========================================================
+   1) CSS 변수(테마)
+   ========================================================= */
+:root{
+    --bg1:#6c7bd4; --bg2:#7a58b7;
+    --panel:#ffffff;
+    --txt:#334155;
+    --muted:#64748b;
+    --pos:#16a34a; --neg:#ef4444;
+    --purple:#6c7bd4;
+    --radius:18px;
+    --shadow:0 16px 40px rgba(0,0,0,.18);
+    --line:#e5e7eb;
+}
+
+
+/* =========================================================
+   2) 기본 리셋
+   ========================================================= */
+*{
+    box-sizing: border-box;
+}
+html, body{
+    height: 100%;
+}
+body{
+    margin: 0;
+    padding: 24px;
+    color: var(--txt);
+    font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+}
+
+
+/* =========================================================
+   3) 레이아웃 컨테이너 & 헤더
+   ========================================================= */
+.container{
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--panel);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* 헤더 */
+.header{
+    padding: 36px 20px 28px;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, var(--bg2), var(--bg1));
+}
+.header h1{
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+.balance{
+    font-size: 14px;
+    opacity: .92;
+}
+.balance-amount{
+    margin-top: 6px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #a7f3d0;
+}
+
+
+/* =========================================================
+   4) 공통 패널 & 입력 섹션
+   ========================================================= */
+.panel{
+    background: #fff;
+    padding: 18px 20px;
+    border-top: 1px solid var(--line);
+}
+
+/* 입력 패널 */
+.input-panel{
+    padding-top: 24px;
+}
+
+/* 입력 행 */
+.row{
+    display: flex;
+    gap: 12px;
+}
+.row input{
+    flex: 1;
+    padding: 14px 12px;
+    outline: none;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+}
+.row input:focus{
+    border-color: var(--purple);
+}
+
+/* 수입/지출 토글 버튼 */
+.type-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 0;
+}
+.btn{
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 999px;
+}
+.btn.type{
+    color: #475569;
+    background: #f8fafc;
+    border: 2px solid var(--line);
+}
+.btn.type.active{
+    color: var(--pos);
+    background: #e0ffe8;
+    border-color: #b7f7c7;
+}
+.btn.type[data-type="expense"].active{
+    color: var(--neg);
+    background: #ffe6e6;
+    border-color: #ffc9c9;
+}
+
+/* 추가 버튼 */
+.btn.add{
+    width: 100%;
+    padding: 14px;
+    color: #fff;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+}
+
+
+/* =========================================================
+   5) 필터 섹션
+   ========================================================= */
+.filter-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.filter-buttons button{
+    cursor: pointer;
+    padding: 8px 16px;
+    color: #475569;
+    background: #fff;
+    border-radius: 999px;
+    border: 2px solid var(--line);
+}
+.filter-buttons button.active{
+    color: #374151;
+    background: #e9ecff;
+    border-color: var(--bg1);
+}
+
+
+/* =========================================================
+   6) 요약(총 수입/지출/잔액)
+   ========================================================= */
+.summary{
+    background: #fff;
+    padding: 22px 20px;
+    text-align: center;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+}
+.summary-item .label{
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+.summary-item .pos{
+    font-weight: 800;
+    color: var(--pos);
+}
+.summary-item .neg{
+    font-weight: 800;
+    color: var(--neg);
+}
+
+
+/* =========================================================
+   7) 목록(List)
+   ========================================================= */
+.list{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* 항목 */
+.item{
+    gap: 10px;
+    padding: 16px 10px;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    border-top: 1px solid var(--line);
+}
+.item .meta{
+    font-size: 12px;
+    color: var(--muted);
+}
+.amount{
+    font-weight: 800;
+}
+.amount.pos{
+    color: var(--pos);
+}
+.amount.neg{
+    color: var(--neg);
+}
+
+/* 타입 배지 */
+.badge{
+    margin-left: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+    display: inline-block;
+    background: #eef2ff;
+    color: #4338ca;
+}
+.badge.expense{
+    background: #fff1f2;
+    color: #be123c;
+}
+
+/* 삭제 버튼 */
+.del{
+    cursor: pointer;
+    font-weight: 700;
+    padding: 8px 12px;
+    border: none;
+    color: #d12b2b;
+    border-radius: 8px;
+    background: #ffe0e0;
+}
+
+/* 비어있을 때 */
+.empty{
+    text-align: center;
+    padding: 36px;
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   8) 반응형
+   ========================================================= */
+@media (max-width: 720px){
+    .summary{
+        gap: 6px;
+        grid-template-columns: 1fr;
+    }
+    .item{
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "info amt"
+            "info del";
+    }
+    .item .del{
+        justify-self: end;
+    }
+}

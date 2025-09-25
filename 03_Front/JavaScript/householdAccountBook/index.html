@@ -1,0 +1,75 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>가계부</title>
+
+  <!-- Google Font (선택) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- 헤더 -->
+    <header class="header">
+      <h1>가계부</h1>
+      <div class="balance">
+        현재 잔액
+        <div id="balance" class="balance-amount">0원</div>
+      </div>
+    </header>
+
+    <!-- 입력 -->
+    <section class="panel input-panel">
+      <div class="row">
+        <input id="desc" type="text" placeholder="내용을 입력하세요 (예: 점심값, 월급)" />
+        <input id="amount" type="text" inputmode="numeric" placeholder="금액을 입력하세요" />
+      </div>
+
+      <div class="type-buttons">
+        <button id="btn-income" class="btn type active" data-type="income">수입</button>
+        <button id="btn-expense" class="btn type" data-type="expense">지출</button>
+      </div>
+
+      <button id="add-btn" class="btn add">추가하기</button>
+    </section>
+
+    <!-- 필터 -->
+    <section class="panel filter-panel">
+      <div class="filter-buttons">
+        <button data-filter="all" class="active">전체</button>
+        <button data-filter="income">수입</button>
+        <button data-filter="expense">지출</button>
+      </div>
+    </section>
+
+    <!-- 요약 -->
+    <section class="panel summary">
+      <div class="summary-item">
+        <div class="label">총 수입</div>
+        <div id="sum-income" class="pos">0원</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">총 지출</div>
+        <div id="sum-expense" class="neg">0원</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">잔액</div>
+        <div id="sum-balance" class="pos">0원</div>
+      </div>
+    </section>
+
+    <!-- 목록 -->
+    <section class="panel list-panel">
+      <ul id="list" class="list"></ul>
+    </section>
+  </div>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
