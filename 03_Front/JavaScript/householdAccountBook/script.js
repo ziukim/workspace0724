@@ -40,12 +40,12 @@
   // 필터
   const filterBtns = document.querySelectorAll('.filter-buttons button');
 
-  // ============== Utils ==============
-  const today = () => new Date().toISOString().slice(0,10);
+  // 유틸함수
+  const today = () => new Date().toISOString().slice(0,10); // 오늘날짜 yy mm dd 로 반환
   const uid = () => Date.now();
-  const toCurr = (n) => Number(n).toLocaleString('ko-KR') + '원';
+  const toCurr = (n) => Number(n).toLocaleString('ko-KR') + '원'; //천단위 끊어서 표시
 
-  const onlyDigits = (str) => str.replace(/[^\d]/g, '');
+  const onlyDigits = (str) => str.replace(/[^\d]/g, ''); //콤마 공백 문자 제거
   function parseAmount(input){
     // "1,000", "  2000 " 등 허용 → 양의 정수
     const cleaned = onlyDigits(String(input));
@@ -68,7 +68,6 @@
       const caret = amountEl.selectionStart;
       const val = onlyDigits(e.target.value);
       amountEl.value = val ? Number(val).toLocaleString('ko-KR') : '';
-      // caret 복잡도는 과제 범위상 생략 (간단 처리)
     });
 
     // 추가
