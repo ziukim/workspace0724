@@ -1,11 +1,9 @@
-(() => { //즉시실행 함수 전역변수 오염방지
+  // const LS_KEY = 'ledger-items:v1';
+  // const FILTER_KEY = 'ledger-filter:v1';
 
-  const LS_KEY = 'ledger-items:v1';
-  const FILTER_KEY = 'ledger-filter:v1';
-
-  let items = JSON.parse(localStorage.getItem(LS_KEY)) || [];
+  let items = JSON.parse(localStorage.getItem('ledger-items:v1')) || [];
   let currentType = 'income'; // 입력 패널 수입/지출 선택
-  let filterState = localStorage.getItem(FILTER_KEY) || 'all';
+  let filterState = localStorage.getItem('ledger-filter:v1') || 'all';
 
   // DOM
   const $ = (s) => document.querySelector(s);
@@ -197,4 +195,4 @@
   }
 
   document.addEventListener('DOMContentLoaded', init);
-})();
+
