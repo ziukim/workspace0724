@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.el.model.vo.Person"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -55,5 +55,135 @@
 	outTest : <c:out value="${outTest}" escapeXml="true"/> <br>
 	outTest : <c:out value="${outTest}" escapeXml="false"/> <br>
 	
+	<br>
+	
+	<h3>2. 조건문 - if(c:if test="조건식")</h3>
+	<p>
+		- java에서의 if문과 같은 역할을 하는 태그<br>
+		- 조건식은 test속성안에 el구문으로 작성한다.
+	</p>
+	
+	<% if(10 < 20){ %>
+		<b>num2가 num1보다 큽니다.</b>
+	<% } %>
+	
+	<c:if test="${num1 > num2}">
+		<b>num1가 num2보다 큽니다</b> <br>
+	</c:if>c:if>
+	
+	<c:if test="${num1 < num2}">
+		<b>num2가 num1보다 큽니다</b> <br>
+	</c:if>c:if>
+	
+	<c:set var="str1" value="hello"/>
+	<c:if test="${str1 == 'hello'}">
+		<b>${str1 }</b> <br>
+	</c:if>
+	
+	<h3>3. 조건문 - 다중분기(c:choose/c:when/c:otherwise)</h3>
+	<c:choose>
+		<c:when test="${num1 > 30 }">
+			<b>num1이 30보다 큽니다</b><br>
+		</c:when>
+		<c:when test="${num1 > 20 }">
+			<b>num1이 20보다 큽니다</b><br>
+		</c:when>
+		<c:when test="${num1 > 10 }">
+			<b>num1이 10보다 큽니다</b><br>
+		</c:when>
+		<c:otherwise>
+			<b>모든 조건이 맞지 않습니다.</b><br>
+		</c:otherwise>
+	</c:choose>
+	
+	<h3>4. 반복문 - forEach</h3>
+	<p>
+		- 카운터 반복(for loop) : (c:forEach var="변수명" begin="초기값" end="끝값" [step="반복시 증가값"])
+		- 베열/컬렉션 반복(forEach) : (c:forEach var="변수명" items="순차적으로 접근할 객체(배열/컬렉션)" [varStatus="현재 접근된 요소의 상태값"])
+	</p>
+	
+	<c:forEach var="i" begin="1" end="10" step="2">
+		반복확인 : ${i} <br>
+	</c:forEach>
+	
+	<c:forEach var="i" begin="1" end="5">
+		<h${i}>태그안에서 사용</h${i}>
+	</c:forEach>
+	
+	<c:set var="colors" value="red,yellow,green,pink"/>
+	colors : ${colors}
+	
+	<ul>
+		<c:forEach var="color" items="${colors}">
+			<li style="color : ${color}">${color}</li>
+		</c:forEach>
+	</ul>
+	
+	<%
+		ArrayList<Person> list = new ArrayList<>();
+		list.add(new Person("최지원", 18, "남자"));
+		list.add(new Person("최지투", 23, "여자"));
+		list.add(new Person("최지삼", 26, "남자"));
+	%>
+	<c:set var="personList" value="<%=list%>" scope="request" />
+
+	<table>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>나이</th>
+				<th>이름</th>
+				<th>성별</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="p" items="${personList}" varStatus="status">
+				<tr>
+					<td>${status.count}</td>
+					<td>${p.name}</td>
+					<td>${p.age}</td>
+					<td>${p.gender}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	
+	<h3>5. 토큰 분리 반복 -forTokens</h3>
+	<p>
+		- (c:forTokens var="변수명" items="분리하고싶은 문자열" delims="구분자")
+		- 구분자를 통해서 분리된 각각의 문자열에 순차적으로 접근하며 반복을 수행
+		- java의 문자열.split(...)와 비슷
+	</p>
+	
+	<c:set var="device" value="컴퓨터, 노트북, TV, 핸드폰, 냉장고, 세탁기"/>
+	
+	<ol>
+		<c:forTokens var="d" items="${device}" delims=",/.">
+			<li>${d}</li>
+		</c:forTokens>
+	</ol>
+	
+	<h3>6. URL 쿼리스트링</h3>
+	<p>
+		url경로를 생성하고, 쿼리스트링을 정의해 둘 수 있는 태그 <br>
+		(c:url var="변수명" value="요청url")<br>
+			(c:param name="키" value="값")<br>
+			(c:param name="키" value="값")<br>
+			(c:param name="키" value="값")<br>
+			...
+		(/c:url)
+	</p>
+	
+	<a href="list.do?color=black&item=5">기존방식의 요청</a>
+	
+	<c:url var="listUrl" value="list.do">
+		<c:param name="color" value="black"/>
+		<c:param name="item" value="5"/>
+	</c:url>
+	
+	<a href="${listUrl}">c:url이용 요청</a>
+	
+	
+	<br><br><br><br><br><br><br><br><br>
 </body>
 </html>
