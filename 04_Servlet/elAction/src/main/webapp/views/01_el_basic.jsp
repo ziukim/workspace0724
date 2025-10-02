@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>1. 기존 방식대로 JSP문법을 사용하여 각 scope의 데이터를 출력</h1>
-	<%-- 
+	
     <%
         //request scope
         String classRoom = (String)request.getAttribute("classRoom");
@@ -32,7 +32,7 @@
             <li>성별 : <%=student.getGender()%></li>
         </ul>
     </p>
-    --%>
+    
     
     <h2>2. EL문법을 이용해서 보다 쉽게 scope의 값을 출력할 수 있음.</h2>
     <p>
