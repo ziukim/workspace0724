@@ -19,6 +19,9 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <style>
         body{
             font-family: "Noto Sans KR", sans-serif;
@@ -60,7 +63,7 @@
 	</c:if>
 
     <div class="container-fluid">
-        <h1 class="text-center py-4 mb-4 border-bottom"><a href="${pageContext.request.contextPath}">Welcome KH World</a></h1>
+        <h1 class="text-center py-4 mb-4 border-bottom">Welcome KH World</h1>
 
         <div class="d-flex justify-content-end mb-4">
         <c:choose>
@@ -113,7 +116,7 @@
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}">HOME</a></li>
                 <li class="nav-item"><a class="nav-link px-4" href="">공지사항</a></li>
-                <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/list.bo">일반게시판</a></li>
+                <li class="nav-item"><a class="nav-link px-4" href="${pageContext.request.contextPath}/list.bo?cpage=1">일반게시판</a></li>
                 <li class="nav-item"><a class="nav-link px-4" href="">사진게시판</a></li>
             </ul>
         </div>
