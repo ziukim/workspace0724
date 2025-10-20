@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>게시글 상세보기</title>
 
@@ -121,7 +121,7 @@
 		}
 	</style>
 </head>
-<body onload="init('${board.boardNo}')">
+<body onload="init(${board.boardNo})">
 	<jsp:include page="/views/common/menubar.jsp" />
 
 	<div class="board-container">
@@ -187,7 +187,7 @@
 									<textarea id="reply-content" cols="50" rows="3"></textarea>
 								</td>
 								<td width="100">
-									<button class="btn btn-primary reply-btn" onclick="insertReply('${board.boardNo}')">댓글등록</button>
+									<button class="btn btn-primary reply-btn" onclick="insertReply(${board.boardNo})">댓글등록</button>
 								</td>
 							</c:when>
 							<c:otherwise>

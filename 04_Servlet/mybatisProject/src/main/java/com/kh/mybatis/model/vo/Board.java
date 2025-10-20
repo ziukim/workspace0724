@@ -1,4 +1,4 @@
-package com.kh.jsp.model.vo;
+package com.kh.mybatis.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
