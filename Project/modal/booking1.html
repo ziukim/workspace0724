@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>피트니스 센터 - 메인</title>
+    <title>방문 예약 - 피트니스 센터 강남점</title>
     <style>
         * {
             margin: 0;
@@ -13,50 +13,354 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-            background-color: #0d0806;
+            background-color: #0a0a0a;
             color: #fff;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
         }
 
-        .main-container {
+        /* 헤더 */
+        .header {
+            background-color: #1a0f0a;
+            border-bottom: 1px solid #ff6b00;
+            padding: 14px 100px;
+            margin: -20px -20px 32px -20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #ffa366;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0;
+        }
+
+        .back-btn:hover {
+            color: #ff6b00;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff6b00;
+            font-size: 16px;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 100px;
+        }
+
+        /* 헬스장 정보 카드 */
+        .gym-info-card {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 32px;
+        }
+
+        .gym-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gym-name {
+            font-size: 16px;
+            color: #ff6b00;
+            font-weight: 600;
+        }
+
+        .gym-badges {
+            display: flex;
+            gap: 8px;
+        }
+
+        .gym-badge {
+            background-color: #2d1810;
+            border: 1px solid #ff6b00;
+            color: #ffa366;
+            padding: 3px 9px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        /* 메인 폼 영역 */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        /* 섹션 */
+        .section {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .section-title-container {
+            background-color: #563c30;
+            border-radius: 14px;
+            padding: 8px 16px;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 25px;
+            color: #1a0f0a;
             text-align: center;
         }
 
-        h1 {
-            font-size: 32px;
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
             color: #ff6b00;
-            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
-        .open-btn {
+        /* 일정 선택 */
+        .date-input-group {
+            margin-bottom: 24px;
+        }
+
+        .date-label {
             background-color: #ff6b00;
-            color: #0a0a0a;
-            border: none;
+            color: white;
+            padding: 3px 9px;
             border-radius: 8px;
-            padding: 16px 48px;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .date-input-wrapper {
+            position: relative;
+        }
+
+        .date-input {
+            background-color: #2d1810;
+            border: 1px solid #ff6b00;
+            border-radius: 6px;
+            padding: 12px;
+            color: #8a6a50;
+            font-size: 14px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .date-input:hover {
+            border-color: #ff8533;
+        }
+
+        .selected-date-display {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #2d1810;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+            color: #8a6a50;
+        }
+
+        .date-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 예약자 정보 입력 */
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: #ffa366;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .required {
+            color: #ff6b00;
+        }
+
+        .optional {
+            color: #8a6a50;
+            font-size: 14px;
+            margin-left: 4px;
+        }
+
+        .input-field {
+            background-color: #2d1810;
+            border: 1px solid #ff6b00;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .input-field::placeholder {
+            color: #8a6a50;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #ff8533;
+        }
+
+        /* 시간대 선택 */
+        .time-slots-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .time-slot {
+            background-color: #2d1810;
+            border-radius: 10px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(255, 107, 0, 0.3);
         }
 
-        .open-btn:hover {
+        .time-slot-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .time-slot-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #1a0f0a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .time-slot-info {
+            flex: 1;
+        }
+
+        .time-slot-status {
+            font-size: 16px;
+            color: #ffa366;
+            margin-bottom: 4px;
+        }
+
+        .time-slot-time {
+            font-size: 14px;
+            color: #8a6a50;
+        }
+
+        .time-slot-btn {
+            background-color: #2d1810;
+            border: 1px solid #ff6b00;
+            color: #ffa366;
+            border-radius: 8px;
+            padding: 3px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* 빈 시간 (선택 가능) */
+        .time-slot.available:hover {
+            background-color: #3d2820;
+        }
+
+        .time-slot.available .time-slot-btn {
+            background-color: #ff6b00;
+        }
+
+        .time-slot.available .time-slot-btn:hover {
             background-color: #ff8533;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(255, 107, 0, 0.4);
         }
 
-        .open-btn:active {
-            transform: translateY(0);
+        /* 예약된 시간 (비활성화) */
+        .time-slot.reserved {
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
-        /* 모달 오버레이 */
-        #modalOverlay {
+        .time-slot.reserved .time-slot-status {
+            border: 1px solid #ff6b00;
+            border-radius: 6px;
+            padding: 2px 7px;
+            display: inline-block;
+        }
+
+        .time-slot.reserved .time-slot-btn {
+            background-color: #2d1810;
+            cursor: not-allowed;
+        }
+
+        /* 선택된 시간 */
+        .time-slot.selected {
+            background-color: #ff6b00;
+        }
+
+        .time-slot.selected .time-slot-status {
+            color: #0a0a0a;
+        }
+
+        .time-slot.selected .time-slot-time {
+            color: #1a0f0a;
+        }
+
+        .time-slot.selected .time-slot-btn {
+            background-color: #0a0a0a;
+            color: #ff6b00;
+        }
+
+        /* 예약하기 버튼 */
+        .submit-btn {
+            background-color: #ff6b00;
+            border: 1px solid #ff6b00;
+            color: #0a0a0a;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 15px 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            float: right;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff8533;
+        }
+
+        .submit-btn:active {
+            background-color: #e65f00;
+        }
+
+        /* 달력 팝업 */
+        .calendar-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -64,185 +368,895 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-            animation: fadeIn 0.3s;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
 
-        #modalOverlay.show {
-            display: block;
+        .calendar-overlay.show {
+            display: flex;
         }
 
-        /* 모달 컨테이너 */
-        #modalContainer {
+        .calendar-popup {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 14px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-month {
+            color: #ff6b00;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            color: #ff6b00;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 12px;
+        }
+
+        .calendar-nav-btn:hover {
+            color: #ff8533;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            color: #8a6a50;
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #ffa366;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            background-color: #2d1810;
+        }
+
+        .calendar-day.selected {
+            background-color: #ff6b00;
+            color: #0a0a0a;
+        }
+
+        .calendar-day.disabled {
+            color: #4a3020;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.disabled:hover {
+            background-color: transparent;
+        }
+
+        .calendar-close-btn {
+            background-color: #ff6b00;
+            border: none;
+            color: #0a0a0a;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .calendar-close-btn:hover {
+            background-color: #ff8533;
+        }
+
+        /* 예약 확인 모달 */
+        .confirm-overlay {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 600px;
-            width: calc(100% - 40px);
-            max-height: 90vh;
-            overflow-y: auto;
-            z-index: 1000;
-            animation: slideUp 0.3s;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
 
-        #modalContainer.show {
-            display: block;
+        .confirm-overlay.show {
+            display: flex;
         }
 
-        /* 모달 스크롤바 */
-        #modalContainer::-webkit-scrollbar {
-            width: 8px;
+        .confirm-modal {
+            background-color: #2d1810;
+            border: 1px solid #ff6b00;
+            border-radius: 14px;
+            padding: 25px;
+            max-width: 463px;
+            width: 90%;
+            position: relative;
         }
 
-        #modalContainer::-webkit-scrollbar-track {
-            background: #1a0f0a;
+        .confirm-title {
+            font-size: 16px;
+            color: #ff6b00;
+            margin-bottom: 46px;
         }
 
-        #modalContainer::-webkit-scrollbar-thumb {
-            background: #ff6b00;
-            border-radius: 4px;
+        .confirm-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 64px;
         }
 
-        #modalContainer::-webkit-scrollbar-thumb:hover {
-            background: #ff8533;
+        .confirm-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+        .confirm-label {
+            font-size: 16px;
+            color: #8a6a50;
+        }
+
+        .confirm-value {
+            font-size: 16px;
+            color: #ffa366;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 14px;
+        }
+
+        .confirm-cancel-btn {
+            background-color: #0a0a0a;
+            border: 1px solid #ff6b00;
+            color: #ffa366;
+            padding: 9px 17px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .confirm-cancel-btn:hover {
+            background-color: #1a0f0a;
+        }
+
+        .confirm-submit-btn {
+            background-color: #ff6b00;
+            border: none;
+            color: #0a0a0a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .confirm-submit-btn:hover {
+            background-color: #ff8533;
+        }
+
+        /* 로그인 필요 모달 */
+        .login-required-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-required-overlay.show {
+            display: flex;
+        }
+
+        .login-required-modal {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 10px;
+            box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+            max-width: 512px;
+            width: 90%;
+            padding: 25px;
+            position: relative;
+        }
+
+        .login-required-close {
+            position: absolute;
+            top: 17px;
+            right: 17px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .login-required-close:hover {
+            opacity: 1;
+        }
+
+        .login-icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .login-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background-color: #2d1810;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-required-title {
+            font-size: 24px;
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .login-required-desc {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .login-required-desc p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .login-required-desc .main-text {
+            font-size: 18px;
+            color: #ffa366;
+            margin-bottom: 8px;
+        }
+
+        .login-required-desc .sub-text {
+            font-size: 16px;
+            color: #8a6a50;
+        }
+
+        .login-benefits-box {
+            background-color: #2d1810;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .login-benefits-title {
+            font-size: 14px;
+            color: #ffa366;
+            margin-bottom: 8px;
+        }
+
+        .login-benefits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .login-benefits-list li {
+            font-size: 14px;
+            color: #8a6a50;
+            padding-left: 0;
+        }
+
+        .login-required-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-cancel-btn {
+            flex: 1;
+            background-color: #0a0a0a;
+            border: 1px solid #ff6b00;
+            color: #ffa366;
+            padding: 9px 17px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-cancel-btn:hover {
+            background-color: #1a0f0a;
+        }
+
+        .login-submit-btn {
+            flex: 1;
+            background-color: #ff6b00;
+            border: none;
+            color: #0a0a0a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-submit-btn:hover {
+            background-color: #ff8533;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 40px;
             }
-            to {
-                opacity: 1;
+
+            .header {
+                padding: 14px 40px;
+            }
+
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .time-slots-container {
+                grid-template-columns: 1fr;
             }
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -40%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        /* 반응형 */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
             }
 
-            .open-btn {
-                padding: 14px 36px;
-                font-size: 16px;
-            }
-
-            #modalContainer {
-                width: calc(100% - 20px);
+            .header {
+                padding: 14px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 메인 컨텐츠 -->
-    <div class="main-container">
-        <h1>피트니스 센터</h1>
-        <button class="open-btn" onclick="openModal()">헬스장 상세보기</button>
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-content">
+            <button class="back-btn" onclick="goBack()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 12.6667L3.33333 8L8 3.33333" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12.6667 8H3.33333" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                돌아가기
+            </button>
+            <div class="page-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M17.596 12.768C17.9711 13.1431 18.48 13.3539 19.0105 13.3539C19.541 13.3539 20.0499 13.1431 20.425 12.768C20.8001 12.3929 21.0109 11.884 21.0109 11.3535C21.0109 10.823 20.8001 10.3141 20.425 9.939L18.657 8.172C19.0321 8.54702 19.5409 8.75765 20.0714 8.75755C20.334 8.7575 20.5941 8.70573 20.8367 8.60517C21.0794 8.50462 21.2998 8.35726 21.4855 8.1715C21.6712 7.98575 21.8185 7.76524 21.9189 7.52256C22.0194 7.27989 22.0711 7.0198 22.0711 6.75715C22.071 6.4945 22.0192 6.23443 21.9187 5.99179C21.8181 5.74915 21.6708 5.52869 21.485 5.343L18.657 2.515C18.282 2.13985 17.7733 1.92904 17.2429 1.92895C16.7124 1.92885 16.2036 2.13948 15.8285 2.5145C15.4534 2.88952 15.2425 3.3982 15.2424 3.92865C15.2424 4.45909 15.453 4.96785 15.828 5.343L14.061 3.575C13.8752 3.38925 13.6547 3.2419 13.412 3.14137C13.1693 3.04084 12.9092 2.98909 12.6465 2.98909C12.3838 2.98909 12.1237 3.04084 11.881 3.14137C11.6383 3.2419 11.4178 3.38925 11.232 3.575C11.0462 3.76075 10.8989 3.98128 10.7984 4.22398C10.6978 4.46668 10.6461 4.7268 10.6461 4.9895C10.6461 5.2522 10.6978 5.51232 10.7984 5.75502C10.8989 5.99772 11.0462 6.21825 11.232 6.404L17.596 12.768Z" stroke="#FF6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                방문 예약
+            </div>
+        </div>
     </div>
 
-    <!-- 모달 오버레이 -->
-    <div id="modalOverlay" onclick="closeModal()"></div>
+    <!-- 컨테이너 -->
+    <div class="container">
+        <!-- 헬스장 정보 -->
+        <div class="gym-info-card">
+            <div class="gym-info-header">
+                <div>
+                    <div class="gym-name">피트니스 센터 강남점</div>
+                    <div class="selected-date-display" id="selectedDateDisplay" style="display: none;">
+                        <div class="date-info">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M5.33333 1.33333V4" stroke="#8A6A50" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.6667 1.33333V4" stroke="#8A6A50" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12.6667 2.66667H3.33333C2.59695 2.66667 2 3.26362 2 4V13.3333C2 14.0697 2.59695 14.6667 3.33333 14.6667H12.6667C13.403 14.6667 14 14.0697 14 13.3333V4C14 3.26362 13.403 2.66667 12.6667 2.66667Z" stroke="#8A6A50" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 6.66667H14" stroke="#8A6A50" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span id="displaySelectedDate"></span>
+                        </div>
+                        <div class="date-info">
+                            <span>피트니스 센터 강남점</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gym-badges">
+                    <span class="gym-badge">24시간</span>
+                    <span class="gym-badge">주차가능</span>
+                    <span class="gym-badge">샤워실</span>
+                </div>
+            </div>
+        </div>
 
-    <!-- 모달 컨테이너 -->
-    <div id="modalContainer"></div>
+        <!-- 폼 영역 -->
+        <div class="form-container">
+            <!-- 일정 선택 -->
+            <div class="section">
+                <div class="section-title-container">
+                    <div class="section-title">일정 선택</div>
+                </div>
+
+                <div class="date-input-group">
+                    <div class="date-label">날짜를 입력하세요</div>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="date-input" id="dateInput" placeholder="날짜를 선택하세요" readonly onclick="openCalendar()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 예약자 정보 -->
+            <div class="section">
+                <div class="section-header">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15.8333 17.5V15.8333C15.8333 14.9493 15.4821 14.1014 14.857 13.4763C14.2319 12.8512 13.3841 12.5 12.5 12.5H7.5C6.61594 12.5 5.7681 12.8512 5.14298 13.4763C4.51786 14.1014 4.16667 14.9493 4.16667 15.8333V17.5" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 9.16667C11.8409 9.16667 13.3333 7.67428 13.3333 5.83333C13.3333 3.99238 11.8409 2.5 10 2.5C8.15905 2.5 6.66667 3.99238 6.66667 5.83333C6.66667 7.67428 8.15905 9.16667 10 9.16667Z" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    예약자 정보
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">이름<span class="required">*</span></label>
+                    <input type="text" class="input-field" id="nameInput" placeholder="이름을 입력하세요" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">전화번호<span class="required">*</span></label>
+                    <input type="tel" class="input-field" id="phoneInput" placeholder="010-0000-0000" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">이메일<span class="optional">(선택)</span></label>
+                    <input type="email" class="input-field" id="emailInput" placeholder="example@email.com">
+                </div>
+            </div>
+        </div>
+
+        <!-- 시간대 선택 -->
+        <div class="section" style="margin-bottom: 32px;">
+            <div class="time-slots-container" id="timeSlotsContainer">
+                <!-- 시간대는 JavaScript로 동적 생성 -->
+            </div>
+        </div>
+
+        <!-- 예약하기 버튼 -->
+        <button class="submit-btn" onclick="submitBooking()">예약하기</button>
+        <div style="clear: both; margin-bottom: 40px;"></div>
+    </div>
+
+    <!-- 달력 팝업 -->
+    <div class="calendar-overlay" id="calendarOverlay" onclick="closeCalendarOnOverlay(event)">
+        <div class="calendar-popup" onclick="event.stopPropagation()">
+            <div class="calendar-header">
+                <button class="calendar-nav-btn" onclick="prevMonth()">◀</button>
+                <div class="calendar-month" id="calendarMonth"></div>
+                <button class="calendar-nav-btn" onclick="nextMonth()">▶</button>
+            </div>
+
+            <div class="calendar-weekdays">
+                <div class="calendar-weekday">일</div>
+                <div class="calendar-weekday">월</div>
+                <div class="calendar-weekday">화</div>
+                <div class="calendar-weekday">수</div>
+                <div class="calendar-weekday">목</div>
+                <div class="calendar-weekday">금</div>
+                <div class="calendar-weekday">토</div>
+            </div>
+
+            <div class="calendar-days" id="calendarDays"></div>
+
+            <button class="calendar-close-btn" onclick="closeCalendar()">확인</button>
+        </div>
+    </div>
+
+    <!-- 예약 확인 모달 -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-modal">
+            <div class="confirm-title">예약 정보 확인</div>
+            
+            <div class="confirm-content">
+                <div class="confirm-row">
+                    <span class="confirm-label">헬스장</span>
+                    <span class="confirm-value">피트니스 센터 강남점</span>
+                </div>
+                <div class="confirm-row">
+                    <span class="confirm-label">날짜</span>
+                    <span class="confirm-value" id="confirmDate"></span>
+                </div>
+                <div class="confirm-row">
+                    <span class="confirm-label">시간</span>
+                    <span class="confirm-value" id="confirmTime"></span>
+                </div>
+            </div>
+
+            <div class="confirm-buttons">
+                <button class="confirm-cancel-btn" onclick="closeConfirmModal()">취소</button>
+                <button class="confirm-submit-btn" onclick="confirmBooking()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13.3333 4L6 11.3333L2.66667 8" stroke="#0A0A0A" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    예약 확정
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 로그인 필요 모달 -->
+    <div class="login-required-overlay" id="loginRequiredOverlay">
+        <div class="login-required-modal">
+            <button class="login-required-close" onclick="closeLoginRequiredModal()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M12 4L4 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 4L12 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="login-icon-container">
+                <div class="login-icon-wrapper">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M26.6667 35V31.6667C26.6667 29.8986 25.9643 28.2029 24.714 26.9526C23.4638 25.7024 21.7681 25 20 25H10C8.23189 25 6.5362 25.7024 5.28595 26.9526C4.03571 28.2029 3.33333 29.8986 3.33333 31.6667V35" stroke="#FF6B00" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M36.6667 35V31.6667C36.6656 30.1896 36.1739 28.7546 35.2689 27.5872C34.364 26.4198 33.0969 25.586 31.6667 25.2167" stroke="#FF6B00" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M26.6667 5.21334C28.0963 5.58396 29.3623 6.41878 30.2661 7.58678C31.1699 8.75478 31.6603 10.1898 31.6603 11.6667C31.6603 13.1435 31.1699 14.5786 30.2661 15.7466C29.3623 16.9146 28.0963 17.7494 26.6667 18.12" stroke="#FF6B00" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 18.3333C18.6819 18.3333 21.6667 15.3486 21.6667 11.6667C21.6667 7.98477 18.6819 5 15 5C11.3181 5 8.33333 7.98477 8.33333 11.6667C8.33333 15.3486 11.3181 18.3333 15 18.3333Z" stroke="#FF6B00" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h2 class="login-required-title">로그인이 필요한 서비스입니다</h2>
+
+            <div class="login-required-desc">
+                <p class="main-text">방문 예약은 회원만 이용 가능합니다.</p>
+                <p class="sub-text">회원가입 후 다양한 헬스장을 예약하고</p>
+                <p class="sub-text">혜택을 받아보세요!</p>
+            </div>
+
+            <div class="login-benefits-box">
+                <div class="login-benefits-title">회원 전용 혜택</div>
+                <ul class="login-benefits-list">
+                    <li>✓ 온라인 방문 예약</li>
+                    <li>✓ 공지사항 확인</li>
+                    <li>✓ PT 예약 및 스케줄 확인</li>
+                    <li>✓ 운동 기록 관리</li>
+                    <li>✓ 헬스장 실시간 혼잡도 확인</li>
+                </ul>
+            </div>
+
+            <div class="login-required-buttons">
+                <button class="login-cancel-btn" onclick="handleLoginCancel()">취소</button>
+                <button class="login-submit-btn" onclick="handleLoginRedirect()">로그인하기</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        function openModal() {
-            console.log('모달 열기 시작...');
-            
-            // modal.html 불러오기
-            fetch('modal.html')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('모달을 불러올 수 없습니다');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    console.log('모달 HTML 로드 완료');
-                    
-                    // 임시 div에 HTML 삽입하여 파싱
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = html;
-                    
-                    // style 태그 추출
-                    const styleTag = tempDiv.querySelector('style');
-                    
-                    // 모달 컨테이너에 style과 content 모두 삽입
-                    const modalContainer = document.getElementById('modalContainer');
-                    modalContainer.innerHTML = '';
-                    
-                    if (styleTag) {
-                        modalContainer.appendChild(styleTag.cloneNode(true));
-                    }
-                    
-                    // .modal-content 추출 및 삽입
-                    const modalContent = tempDiv.querySelector('.modal-content');
-                    if (modalContent) {
-                        modalContainer.appendChild(modalContent);
-                    }
-                    
-                    // script 태그 실행
-                    const scriptTag = tempDiv.querySelector('script');
-                    if (scriptTag) {
-                        const newScript = document.createElement('script');
-                        newScript.textContent = scriptTag.textContent;
-                        modalContainer.appendChild(newScript);
-                    }
-                    
-                    // 모달 표시
-                    document.getElementById('modalOverlay').classList.add('show');
-                    document.getElementById('modalContainer').classList.add('show');
-                    
-                    // body 스크롤 방지
-                    document.body.style.overflow = 'hidden';
-                    
-                    console.log('모달 표시 완료');
-                })
-                .catch(error => {
-                    console.error('에러:', error);
-                    alert('모달을 불러오는데 실패했습니다.\n\n오류: ' + error.message);
-                });
-        }
+        // 로그인 상태 확인 (임시 - 실제로는 세션이나 토큰으로 확인)
+        let isLoggedIn = false; // 테스트를 위해 false로 설정
+        
+        // 예약된 시간대 (실제로는 서버에서 가져와야 함)
+        const reservedTimes = ['10:00 - 11:00', '16:00 - 17:00'];
 
-        function closeModal() {
-            console.log('모달 닫기');
-            
-            // 모달 숨기기
-            document.getElementById('modalOverlay').classList.remove('show');
-            document.getElementById('modalContainer').classList.remove('show');
-            
-            // body 스크롤 복원
-            document.body.style.overflow = '';
-            
-            // 내용 비우기
-            setTimeout(() => {
-                document.getElementById('modalContainer').innerHTML = '';
-            }, 300);
-        }
+        // 시간대 생성
+        const timeSlots = [
+            '10:00 - 11:00', '11:00 - 12:00', '12:00 - 13:00',
+            '13:00 - 14:00', '14:00 - 15:00', '15:00 - 16:00',
+            '16:00 - 17:00', '17:00 - 18:00', '18:00 - 19:00',
+            '19:00 - 20:00', '20:00 - 21:00', '21:00 - 22:00'
+        ];
 
-        // ESC 키로 모달 닫기
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const modalContainer = document.getElementById('modalContainer');
-                if (modalContainer.classList.contains('show')) {
-                    closeModal();
+        let selectedTime = null;
+        let selectedDate = null;
+        let currentMonth = new Date();
+        let tempSelectedDate = null;
+
+        // 시간대 렌더링
+        function renderTimeSlots() {
+            const container = document.getElementById('timeSlotsContainer');
+            container.innerHTML = '';
+
+            timeSlots.forEach(time => {
+                const isReserved = reservedTimes.includes(time);
+                const status = isReserved ? 'reserved' : 'available';
+                const statusText = isReserved ? '예약된 시간' : '빈 시간';
+
+                const slot = document.createElement('div');
+                slot.className = `time-slot ${status}`;
+                slot.innerHTML = `
+                    <div class="time-slot-content">
+                        <div class="time-slot-icon">
+                            <svg width="20" height="20" viewBox="0 0 17 17" fill="none">
+                                <path d="M8.33333 4.16671V8.33333L10.8333 10.8333" stroke="#FF6B00" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.33333 15.8333C12.4754 15.8333 15.8333 12.4754 15.8333 8.33333C15.8333 4.1912 12.4754 0.833335 8.33333 0.833335C4.1912 0.833335 0.833335 4.1912 0.833335 8.33333C0.833335 12.4754 4.1912 15.8333 8.33333 15.8333Z" stroke="#FF6B00" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="time-slot-info">
+                            <div class="time-slot-status">${statusText}</div>
+                            <div class="time-slot-time">${time}</div>
+                        </div>
+                        <button class="time-slot-btn" onclick="event.stopPropagation()">+</button>
+                    </div>
+                `;
+
+                if (!isReserved) {
+                    slot.onclick = function() {
+                        selectTime(time, this);
+                    };
                 }
+
+                container.appendChild(slot);
+            });
+        }
+
+        // 시간 선택
+        function selectTime(time, element) {
+            // 이전 선택 해제
+            document.querySelectorAll('.time-slot.selected').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+
+            // 새로운 선택
+            element.classList.add('selected');
+            selectedTime = time;
+        }
+
+        // 달력 관련 함수
+        function openCalendar() {
+            document.getElementById('calendarOverlay').classList.add('show');
+            renderCalendar();
+        }
+
+        function closeCalendar() {
+            document.getElementById('calendarOverlay').classList.remove('show');
+            if (tempSelectedDate) {
+                selectedDate = tempSelectedDate;
+                updateDateDisplay();
+            }
+        }
+
+        function closeCalendarOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                closeCalendar();
+            }
+        }
+
+        function prevMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+
+            document.getElementById('calendarMonth').textContent = 
+                `${year}년 ${month + 1}월`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+
+            const daysContainer = document.getElementById('calendarDays');
+            daysContainer.innerHTML = '';
+
+            // 빈 칸 채우기
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                daysContainer.appendChild(emptyDay);
+            }
+
+            // 날짜 채우기
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+
+                const currentDate = new Date(year, month, day);
+                
+                // 과거 날짜는 비활성화
+                if (currentDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+                    dayElement.classList.add('disabled');
+                } else {
+                    // 선택된 날짜 표시
+                    if (tempSelectedDate && 
+                        tempSelectedDate.getDate() === day &&
+                        tempSelectedDate.getMonth() === month &&
+                        tempSelectedDate.getFullYear() === year) {
+                        dayElement.classList.add('selected');
+                    }
+
+                    dayElement.onclick = function() {
+                        document.querySelectorAll('.calendar-day.selected').forEach(d => {
+                            d.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                        tempSelectedDate = new Date(year, month, day);
+                    };
+                }
+
+                daysContainer.appendChild(dayElement);
+            }
+        }
+
+        function updateDateDisplay() {
+            if (selectedDate) {
+                const year = selectedDate.getFullYear();
+                const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+                const day = String(selectedDate.getDate()).padStart(2, '0');
+                
+                const dateString = `${year}. ${month}. ${day}.`;
+                document.getElementById('dateInput').value = dateString;
+                document.getElementById('displaySelectedDate').textContent = dateString;
+                document.getElementById('selectedDateDisplay').style.display = 'flex';
+            }
+        }
+
+        // 돌아가기
+        function goBack() {
+            window.location.href = 'modal.html';
+        }
+
+        // 예약하기
+        function submitBooking() {
+            const name = document.getElementById('nameInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+
+            if (!selectedDate) {
+                alert('날짜를 선택해주세요.');
+                return;
+            }
+
+            if (!name) {
+                alert('이름을 입력해주세요.');
+                return;
+            }
+
+            if (!phone) {
+                alert('전화번호를 입력해주세요.');
+                return;
+            }
+
+            if (!selectedTime) {
+                alert('시간대를 선택해주세요.');
+                return;
+            }
+
+            // 예약 확인 모달 표시
+            showConfirmModal();
+        }
+
+        // 예약 확인 모달 열기
+        function showConfirmModal() {
+            // 날짜 포맷 변환
+            const weekdays = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+            const year = selectedDate.getFullYear();
+            const month = selectedDate.getMonth() + 1;
+            const day = selectedDate.getDate();
+            const weekday = weekdays[selectedDate.getDay()];
+            
+            const formattedDate = `${year}년 ${month}월 ${day}일 ${weekday}`;
+            
+            // 시간 포맷 (시작 시간만 표시)
+            const timeStart = selectedTime.split(' - ')[0];
+
+            // 모달에 정보 표시
+            document.getElementById('confirmDate').textContent = formattedDate;
+            document.getElementById('confirmTime').textContent = timeStart;
+
+            // 모달 표시
+            document.getElementById('confirmOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 예약 확인 모달 닫기
+        function closeConfirmModal() {
+            document.getElementById('confirmOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // 예약 확정
+        function confirmBooking() {
+            const name = document.getElementById('nameInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+
+            const bookingData = {
+                date: selectedDate.toLocaleDateString('ko-KR'),
+                time: selectedTime,
+                name: name,
+                phone: phone,
+                email: email,
+                gym: '피트니스 센터 강남점'
+            };
+
+            console.log('예약 정보:', bookingData);
+            
+            // 모달 닫기
+            closeConfirmModal();
+            
+            // 성공 알림
+            alert(`예약이 완료되었습니다!\n\n날짜: ${bookingData.date}\n시간: ${bookingData.time}\n이름: ${bookingData.name}\n전화번호: ${bookingData.phone}`);
+            
+            // 실제로는 여기서 서버로 데이터 전송
+            // 성공 후 메인 페이지로 이동하거나 초기화
+        }
+
+        // 로그인 필요 모달 관련 함수
+        function showLoginRequiredModal() {
+            document.getElementById('loginRequiredOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLoginRequiredModal() {
+            document.getElementById('loginRequiredOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function handleLoginCancel() {
+            closeLoginRequiredModal();
+            // 이전 페이지로 이동
+            window.location.href = 'modal.html';
+        }
+
+        function handleLoginRedirect() {
+            // 실제로는 로그인 페이지로 이동
+            alert('로그인 페이지로 이동합니다.');
+            // window.location.href = 'login.html';
+        }
+
+        // 페이지 로드 시 로그인 확인
+        window.addEventListener('DOMContentLoaded', function() {
+            if (!isLoggedIn) {
+                showLoginRequiredModal();
             }
         });
+
+        // 초기화
+        renderTimeSlots();
     </script>
 </body>
 </html>
