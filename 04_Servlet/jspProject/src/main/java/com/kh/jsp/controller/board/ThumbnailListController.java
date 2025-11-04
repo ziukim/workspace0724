@@ -31,7 +31,7 @@ public class ThumbnailListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Board> list = new BoardService().selectThumbnailList();
+		ArrayList<Board> list = new BoardService().selectThumnailList();
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/board/thumbnailListView.jsp").forward(request, response);

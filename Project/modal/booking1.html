@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피트니스 센터 - 메인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #0d0806;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #ff6b00;
+            margin-bottom: 20px;
+        }
+
+        .open-btn {
+            background-color: #ff6b00;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 48px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(255, 107, 0, 0.3);
+        }
+
+        .open-btn:hover {
+            background-color: #ff8533;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(255, 107, 0, 0.4);
+        }
+
+        .open-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 모달 오버레이 */
+        #modalOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            animation: fadeIn 0.3s;
+        }
+
+        #modalOverlay.show {
+            display: block;
+        }
+
+        /* 모달 컨테이너 */
+        #modalContainer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 600px;
+            width: calc(100% - 40px);
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 1000;
+            animation: slideUp 0.3s;
+        }
+
+        #modalContainer.show {
+            display: block;
+        }
+
+        /* 모달 스크롤바 */
+        #modalContainer::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #modalContainer::-webkit-scrollbar-track {
+            background: #1a0f0a;
+        }
+
+        #modalContainer::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 4px;
+        }
+
+        #modalContainer::-webkit-scrollbar-thumb:hover {
+            background: #ff8533;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* 반응형 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .open-btn {
+                padding: 14px 36px;
+                font-size: 16px;
+            }
+
+            #modalContainer {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 메인 컨텐츠 -->
+    <div class="main-container">
+        <h1>피트니스 센터</h1>
+        <button class="open-btn" onclick="openModal()">헬스장 상세보기</button>
+    </div>
+
+    <!-- 모달 오버레이 -->
+    <div id="modalOverlay" onclick="closeModal()"></div>
+
+    <!-- 모달 컨테이너 -->
+    <div id="modalContainer"></div>
+
+    <script>
+        function openModal() {
+            console.log('모달 열기 시작...');
+            
+            // modal.html 불러오기
+            fetch('modal.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('모달을 불러올 수 없습니다');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    console.log('모달 HTML 로드 완료');
+                    
+                    // 임시 div에 HTML 삽입하여 파싱
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    
+                    // style 태그 추출
+                    const styleTag = tempDiv.querySelector('style');
+                    
+                    // 모달 컨테이너에 style과 content 모두 삽입
+                    const modalContainer = document.getElementById('modalContainer');
+                    modalContainer.innerHTML = '';
+                    
+                    if (styleTag) {
+                        modalContainer.appendChild(styleTag.cloneNode(true));
+                    }
+                    
+                    // .modal-content 추출 및 삽입
+                    const modalContent = tempDiv.querySelector('.modal-content');
+                    if (modalContent) {
+                        modalContainer.appendChild(modalContent);
+                    }
+                    
+                    // script 태그 실행
+                    const scriptTag = tempDiv.querySelector('script');
+                    if (scriptTag) {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = scriptTag.textContent;
+                        modalContainer.appendChild(newScript);
+                    }
+                    
+                    // 모달 표시
+                    document.getElementById('modalOverlay').classList.add('show');
+                    document.getElementById('modalContainer').classList.add('show');
+                    
+                    // body 스크롤 방지
+                    document.body.style.overflow = 'hidden';
+                    
+                    console.log('모달 표시 완료');
+                })
+                .catch(error => {
+                    console.error('에러:', error);
+                    alert('모달을 불러오는데 실패했습니다.\n\n오류: ' + error.message);
+                });
+        }
+
+        function closeModal() {
+            console.log('모달 닫기');
+            
+            // 모달 숨기기
+            document.getElementById('modalOverlay').classList.remove('show');
+            document.getElementById('modalContainer').classList.remove('show');
+            
+            // body 스크롤 복원
+            document.body.style.overflow = '';
+            
+            // 내용 비우기
+            setTimeout(() => {
+                document.getElementById('modalContainer').innerHTML = '';
+            }, 300);
+        }
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modalContainer = document.getElementById('modalContainer');
+                if (modalContainer.classList.contains('show')) {
+                    closeModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

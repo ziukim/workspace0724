@@ -52,13 +52,13 @@ public class InsertController extends HttpServlet {
 		
 		int result = new MemberService().insertMember(m);
 		
-		if(result>0) { //가입성공
-			request.getSession().setAttribute("alertMsg", "성공적으로 회원가입을 완료하였습니다");
+		if(result > 0) { //가입성공
+			request.getSession().setAttribute("alertMsg", "성공적으로 회원가입을 완료하였습니다.");
 			
 			response.sendRedirect(request.getContextPath());
 		} else { //가입실패
-			request.setAttribute("erroMsg", "회원가입에 실패하였습니다.");
-			request.getRequestDispatcher("views/common/error.jsp");
+			request.setAttribute("errorMsg", "회원가입에 실패하였습니다.");
+			request.getRequestDispatcher("views/common/error.jsp").forward(request, response);
 		}
 	}
 

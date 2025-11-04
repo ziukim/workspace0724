@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class ThumbnailEnrollController
  */
-@WebServlet("/ThumbnailEnrollController")
+@WebServlet("/enrollForm.th")
 public class ThumbnailEnrollController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,7 +26,7 @@ public class ThumbnailEnrollController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.getRequestDispatcher("views/board/thumbnailEnrollForm.jsp").forward(request, response);
 	}
 
 	/**

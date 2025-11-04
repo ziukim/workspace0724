@@ -35,10 +35,10 @@ public class BoardService {
 		return list;
 	}
 	
-	public ArrayList<Board> selectThumbnailList(){
+	public ArrayList<Board> selectThumnailList(){
 		Connection conn = getConnection();
 		
-		ArrayList<Board> list = new BoardDao().selectThumbnailList(conn);
+		ArrayList<Board> list = new BoardDao().selectThumnailList(conn);
 		close(conn);
 		
 		return list;

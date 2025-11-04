@@ -78,7 +78,7 @@ public class BoardDao {
 		return list;
 	}
 	
-	public ArrayList<Board> selectThumbnailList(Connection conn){
+	public ArrayList<Board> selectThumnailList(Connection conn){
 		//select -> ResultSet(여러개) -> ArrayList
 		ArrayList<Board> list = new ArrayList<>();
 		
