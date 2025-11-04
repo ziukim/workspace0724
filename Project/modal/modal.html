@@ -283,6 +283,7 @@
             color: #b8b8b8;
             text-align: left;
             margin-bottom: 24px;
+            background-color: #ff6b00;
         }
 
         /* 방문 예약 버튼 */
@@ -530,7 +531,7 @@
         <!-- 기구 디테일 -->
         <div class="section">
             <h3 class="section-title">기구 디테일</h3>
-            
+            <button class="more-text">+더보기</button>
             <div class="equipment-grid">
                 <div class="equipment-item">
                     <div class="equipment-image">
@@ -557,7 +558,6 @@
                     <p class="equipment-name">숄더프레스 - 아스날</p>
                 </div>
             </div>
-            <p class="more-text">+더보기</p>
         </div>
 
         <!-- 방문 예약 버튼 -->
@@ -576,8 +576,13 @@
         // 닫기 버튼 기능
         function closeModal() {
             if (confirm('모달을 닫으시겠습니까?')) {
-                window.close();
-            }
+            // 모달을 숨기기
+            const modal = document.querySelector('.modal-content');
+            modal.style.display = 'none';
+
+            // index.html로 다시 이동
+            window.location.href = 'index.html';
+        }
         }
 
         // 방문 예약 버튼 클릭 이벤트
