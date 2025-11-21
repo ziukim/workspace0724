@@ -1,0 +1,5 @@
+package com.kh.mybatis.model.dao;
+
+public class MemberDao2 {
+
+}

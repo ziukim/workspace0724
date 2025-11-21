@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출석 완료</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+        }
+
+        /* 모달 컨테이너 */
+        .modal-container {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 10px;
+            width: 512px;
+            height: 626px;
+            position: relative;
+            box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -4px rgba(0,0,0,0.1);
+        }
+
+        /* 헤더 */
+        .modal-header {
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            width: 462px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            line-height: 32px;
+            color: #ff6b00;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 닫기 버튼 */
+        .close-button {
+            position: absolute;
+            right: 17px;
+            top: 17px;
+            width: 16px;
+            height: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            padding: 0;
+        }
+
+        .close-button:hover {
+            opacity: 1;
+        }
+
+        .close-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 아이콘 컨테이너 */
+        .icon-container {
+            position: absolute;
+            left: 216px;
+            top: 97px;
+            width: 80px;
+            height: 80px;
+            background-color: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-container svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* 회원명 섹션 */
+        .member-section {
+            position: absolute;
+            left: 25px;
+            top: 201px;
+            width: 462px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .member-name {
+            font-size: 30px;
+            line-height: 36px;
+            color: #ffa366;
+            text-align: center;
+        }
+
+        .status-message {
+            font-size: 20px;
+            line-height: 28px;
+            color: #4caf50;
+            text-align: center;
+        }
+
+        /* 정보 카드 */
+        .info-card {
+            position: absolute;
+            left: 25px;
+            top: 305px;
+            width: 462px;
+            background-color: #2d1810;
+            border-radius: 10px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 24px;
+        }
+
+        .info-label {
+            font-size: 16px;
+            line-height: 24px;
+            color: #8a6a50;
+        }
+
+        .info-value {
+            font-size: 16px;
+            line-height: 24px;
+            color: #ffa366;
+        }
+
+        .info-value-long {
+            font-size: 14px;
+            line-height: 20px;
+            color: #ffa366;
+            font-family: 'ABeeZee', 'Noto Sans KR', sans-serif;
+        }
+
+        /* 확인 버튼 */
+        .confirm-button {
+            position: absolute;
+            left: 25px;
+            top: 473px;
+            width: 462px;
+            height: 56px;
+            background-color: #ff6b00;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .confirm-button:hover {
+            background-color: #ff8533;
+        }
+
+        .confirm-button-text {
+            font-size: 20px;
+            line-height: 28px;
+            color: #0a0a0a;
+            font-weight: normal;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .modal-container {
+                width: 90%;
+                max-width: 512px;
+                height: auto;
+                min-height: 626px;
+            }
+
+            .modal-header,
+            .member-section,
+            .info-card,
+            .confirm-button {
+                left: 5%;
+                width: 90%;
+            }
+
+            .icon-container {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .member-name {
+                font-size: 24px;
+            }
+
+            .status-message {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-container">
+        <!-- 헤더 -->
+        <div class="modal-header">
+            <h2 class="modal-title">출석 완료!</h2>
+        </div>
+
+        <!-- 닫기 버튼 -->
+        <button class="close-button">
+            <svg fill="none" viewBox="0 0 16 16">
+                <path d="M12 4L4 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 4L12 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+        <!-- 체크 아이콘 (녹색) -->
+        <div class="icon-container">
+            <svg fill="none" viewBox="0 0 48 48">
+                <path d="M40 12L18 34L8 24" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <!-- 회원명 섹션 -->
+        <div class="member-section">
+            <p class="member-name">김회원님</p>
+            <p class="status-message">출석이 완료되었습니다!</p>
+        </div>
+
+        <!-- 정보 카드 -->
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label">회원명</span>
+                <span class="info-value">김회원</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">회원권</span>
+                <span class="info-value-long">30일 이용권 + 30일 락커 이용권 + PT 10회 이용권</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">출석 일시</span>
+                <span class="info-value">2025.10.30 14:48</span>
+            </div>
+        </div>
+
+        <!-- 확인 버튼 -->
+        <button class="confirm-button">
+            <span class="confirm-button-text">확인</span>
+        </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+package com.kh.jsp.service;
+
+public class BoardService {
+
+}

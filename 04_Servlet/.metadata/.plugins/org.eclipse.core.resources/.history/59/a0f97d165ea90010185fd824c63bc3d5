@@ -1,0 +1,5 @@
+package com.kh.jsp.common.vo;
+
+public class PageInfo {
+
+}

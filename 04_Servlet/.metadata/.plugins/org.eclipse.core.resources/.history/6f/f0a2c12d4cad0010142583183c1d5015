@@ -1,0 +1,18 @@
+package com.kh.mybatis.common;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
+
+//공통 템플릿(매번 반복적으로 작성될 코드를 메서드 정의)
+public class Template {
+	public static SqlSession getSqlSession() {
+		
+	}
+}

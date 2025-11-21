@@ -1018,7 +1018,7 @@
             alert(`예약이 완료되었습니다!\n\n날짜: ${bookingData.date}\n시간: ${bookingData.time}\n이름: ${bookingData.name}\n전화번호: ${bookingData.phone}`);
             
             // 실제로는 여기서 서버로 데이터 전송
-            // 성공 후 메인 페이지로 이동하거나 초기화
+            window.location.href = 'modal.html';
         }
 
         // 초기화

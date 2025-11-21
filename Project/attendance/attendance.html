@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출석 체크</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+            background-color: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 뒤로가기 버튼 */
+        .back-button {
+            position: absolute;
+            left: 21px;
+            top: 22px;
+            width: 219.844px;
+            height: 36px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #2D1810;
+        }
+
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .back-button-text {
+            font-size: 14px;
+            color: #ffa366;
+            line-height: 20px;
+        }
+
+        /* 카드 */
+        .card {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 14px;
+            width: 672px;
+            height: 526px;
+            position: relative;
+            padding: 49px;
+        }
+
+        /* 아이콘 컨테이너 */
+        .icon-container {
+            position: absolute;
+            left: 239px;
+            top: 49px;
+            width: 96px;
+            height: 96px;
+            background-color: #2d1810;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-container svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* 헤더 */
+        .header {
+            position: absolute;
+            left: 49px;
+            top: 177px;
+            width: 574px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .title {
+            font-size: 36px;
+            line-height: 40px;
+            color: #ff6b00;
+            text-align: center;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            line-height: 32px;
+            color: #ffa366;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* 입력 섹션 */
+        .input-section {
+            position: absolute;
+            left: 49px;
+            top: 289px;
+            width: 574px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .phone-input-container {
+            background-color: #2d1810;
+            border: 1px solid #ff6b00;
+            border-radius: 8px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .phone-input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            font-size: 32px;
+            color: #ffa366;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .phone-input::placeholder {
+            color: #8a6a50;
+        }
+
+        /* 버튼 */
+        .submit-button {
+            width: 100%;
+            height: 64px;
+            border: none;
+            border-radius: 8px;
+            font-size: 24px;
+            line-height: 32px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .submit-button.active {
+            background-color: #ff6b00;
+            color: #0a0a0a;
+            font-weight: 600;
+        }
+
+        .submit-button.active:hover {
+            background-color: #ff8533;
+        }
+
+        .submit-button.inactive {
+            background-color: #4a3020;
+            color: #8a6a50;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 안내 텍스트 */
+        .help-text {
+            position: absolute;
+            left: 49px;
+            top: 481px;
+            width: 574px;
+            text-align: center;
+        }
+
+        .help-text p {
+            font-size: 14px;
+            line-height: 20px;
+            color: #8a6a50;
+            margin: 0;
+        }
+
+        /* 모달 오버레이 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        /* 모달 컨테이너 */
+        .modal-container {
+            background-color: #1a0f0a;
+            border: 1px solid #ff6b00;
+            border-radius: 10px;
+            width: 512px;
+            height: 626px;
+            position: relative;
+            box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -4px rgba(0,0,0,0.1);
+        }
+
+        /* 모달 헤더 */
+        .modal-header {
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            width: 462px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            line-height: 32px;
+            color: #ff6b00;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 모달 닫기 버튼 */
+        .close-button {
+            position: absolute;
+            right: 17px;
+            top: 17px;
+            width: 16px;
+            height: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            padding: 0;
+        }
+
+        .close-button:hover {
+            opacity: 1;
+        }
+
+        .close-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 모달 아이콘 컨테이너 */
+        .modal-icon-container {
+            position: absolute;
+            left: 216px;
+            top: 97px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-icon-container.check-in {
+            background-color: #4caf50;
+        }
+
+        .modal-icon-container.check-out {
+            background-color: #ff5252;
+        }
+
+        .modal-icon-container svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* 회원명 섹션 */
+        .member-section {
+            position: absolute;
+            left: 25px;
+            top: 201px;
+            width: 462px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .member-name {
+            font-size: 30px;
+            line-height: 36px;
+            color: #ffa366;
+            text-align: center;
+        }
+
+        .status-message {
+            font-size: 20px;
+            line-height: 28px;
+            color: #4caf50;
+            text-align: center;
+        }
+
+        /* 정보 카드 */
+        .info-card {
+            position: absolute;
+            left: 25px;
+            top: 305px;
+            width: 462px;
+            background-color: #2d1810;
+            border-radius: 10px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 24px;
+        }
+
+        .info-label {
+            font-size: 16px;
+            line-height: 24px;
+            color: #8a6a50;
+        }
+
+        .info-value {
+            font-size: 16px;
+            line-height: 24px;
+            color: #ffa366;
+        }
+
+        .info-value-long {
+            font-size: 14px;
+            line-height: 20px;
+            color: #ffa366;
+            font-family: 'ABeeZee', 'Noto Sans KR', sans-serif;
+        }
+
+        /* 확인 버튼 */
+        .confirm-button {
+            position: absolute;
+            left: 25px;
+            top: 473px;
+            width: 462px;
+            height: 56px;
+            background-color: #ff6b00;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .confirm-button:hover {
+            background-color: #ff8533;
+        }
+
+        .confirm-button-text {
+            font-size: 20px;
+            line-height: 28px;
+            color: #0a0a0a;
+            font-weight: normal;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .card {
+                width: 90%;
+                max-width: 672px;
+                height: auto;
+                padding: 30px 20px;
+            }
+
+            .icon-container {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 30px;
+            }
+
+            .header {
+                left: 20px;
+                right: 20px;
+                top: 146px;
+                width: auto;
+            }
+
+            .title {
+                font-size: 28px;
+                line-height: 32px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+                line-height: 24px;
+            }
+
+            .input-section {
+                left: 20px;
+                right: 20px;
+                top: 230px;
+                width: auto;
+            }
+
+            .phone-input {
+                font-size: 24px;
+            }
+
+            .submit-button {
+                font-size: 20px;
+            }
+
+            .help-text {
+                left: 20px;
+                right: 20px;
+                top: auto;
+                bottom: 30px;
+                width: auto;
+            }
+
+            .back-button {
+                left: 10px;
+                top: 10px;
+                width: auto;
+            }
+
+            .modal-container {
+                width: 90%;
+                max-width: 512px;
+                height: auto;
+                min-height: 626px;
+            }
+
+            .modal-header,
+            .member-section,
+            .info-card,
+            .confirm-button {
+                left: 5%;
+                width: 90%;
+            }
+
+            .modal-icon-container {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .member-name {
+                font-size: 24px;
+            }
+
+            .status-message {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 뒤로가기 버튼 -->
+    <button class="back-button" onclick="goBack()">
+        <svg fill="none" viewBox="0 0 16 16">
+            <path d="M8 12.6667L3.33333 8L8 3.33333" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12.6667 8H3.33333" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="back-button-text">관리자 페이지로 돌아가기</span>
+    </button>
+
+    <!-- 메인 카드 -->
+    <div class="card">
+        <!-- 전화 아이콘 -->
+        <div class="icon-container">
+            <svg fill="none" viewBox="0 0 48 48">
+                <path d="M27.664 33.136C28.0771 33.3257 28.5424 33.369 28.9834 33.2589C29.4244 33.1487 29.8147 32.8916 30.09 32.53L30.8 31.6C31.1726 31.1032 31.6557 30.7 32.2111 30.4223C32.7666 30.1446 33.379 30 34 30H40C41.0609 30 42.0783 30.4214 42.8284 31.1716C43.5786 31.9217 44 32.9391 44 34V40C44 41.0609 43.5786 42.0783 42.8284 42.8284C42.0783 43.5786 41.0609 44 40 44C30.4522 44 21.2955 40.2072 14.5442 33.4558C7.79285 26.7045 4 17.5478 4 8C4 6.93913 4.42143 5.92172 5.17157 5.17157C5.92172 4.42143 6.93913 4 8 4H14C15.0609 4 16.0783 4.42143 16.8284 5.17157C17.5786 5.92172 18 6.93913 18 8V14C18 14.621 17.8554 15.2334 17.5777 15.7889C17.3 16.3443 16.8968 16.8274 16.4 17.2L15.464 17.902C15.0968 18.1824 14.838 18.5812 14.7316 19.0307C14.6251 19.4802 14.6776 19.9528 14.88 20.368C17.6134 25.9197 22.1088 30.4096 27.664 33.136Z" stroke="#FF6B00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <!-- 헤더 -->
+        <div class="header">
+            <h1 class="title">출석 체크</h1>
+            <p class="subtitle">회원님의 전화번호를 입력하세요</p>
+        </div>
+
+        <!-- 입력 섹션 -->
+        <div class="input-section">
+            <div class="phone-input-container">
+                <input 
+                    type="tel" 
+                    id="phoneInput" 
+                    class="phone-input" 
+                    placeholder="01012345678"
+                    maxlength="11"
+                    autofocus
+                >
+            </div>
+            <button id="submitButton" class="submit-button inactive" disabled>
+                출석 체크
+            </button>
+        </div>
+
+        <!-- 안내 텍스트 -->
+        <div class="help-text">
+            <p>전화번호 입력 후 엔터키를 누르거나 버튼을 클릭하세요</p>
+        </div>
+    </div>
+
+    <!-- 모달 오버레이 -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div id="modalContainer" class="modal-container">
+            <!-- 모달 내용이 여기에 동적으로 생성됩니다 -->
+        </div>
+    </div>
+
+    <script>
+        const phoneInput = document.getElementById('phoneInput');
+        const submitButton = document.getElementById('submitButton');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalContainer = document.getElementById('modalContainer');
+
+        // 전화번호 입력 처리
+        phoneInput.addEventListener('input', function(e) {
+            // 숫자만 추출
+            let value = e.target.value.replace(/[^\d]/g, '');
+            
+            // 최대 11자리
+            value = value.slice(0, 11);
+            
+            e.target.value = value;
+
+            // 버튼 활성화/비활성화
+            updateButtonState(value);
+        });
+
+        // 엔터키 처리
+        phoneInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const phoneNumber = phoneInput.value.trim();
+                if (phoneNumber.length >= 10) {
+                    submitAttendance();
+                }
+            }
+        });
+
+        // 버튼 클릭 처리
+        submitButton.addEventListener('click', function() {
+            const phoneNumber = phoneInput.value.trim();
+            if (phoneNumber.length >= 10) {
+                submitAttendance();
+            }
+        });
+
+        // 버튼 상태 업데이트
+        function updateButtonState(phoneNumber) {
+            if (phoneNumber.length >= 10) {
+                submitButton.classList.remove('inactive');
+                submitButton.classList.add('active');
+                submitButton.disabled = false;
+            } else {
+                submitButton.classList.remove('active');
+                submitButton.classList.add('inactive');
+                submitButton.disabled = true;
+            }
+        }
+
+        // 출석 체크 제출
+        function submitAttendance() {
+            const phoneNumber = phoneInput.value.trim();
+            
+            // localStorage에서 출석 상태 확인
+            const attendanceStatus = localStorage.getItem('attendance_' + phoneNumber);
+            
+            if (attendanceStatus === 'checked_in') {
+                // 이미 출석한 경우 -> 퇴장 처리
+                showModal('exit', phoneNumber);
+                localStorage.setItem('attendance_' + phoneNumber, 'checked_out');
+            } else {
+                // 첫 출석 -> 출석 처리
+                showModal('checkin', phoneNumber);
+                localStorage.setItem('attendance_' + phoneNumber, 'checked_in');
+            }
+            
+            // 입력 필드 초기화
+            phoneInput.value = '';
+            updateButtonState('');
+        }
+
+        // 모달 표시
+        function showModal(type, phoneNumber) {
+            // 현재 시간 생성
+            const now = new Date();
+            const dateTimeStr = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            
+            let modalHTML = '';
+            
+            if (type === 'checkin') {
+                // 출석 완료 모달
+                modalHTML = `
+                    <!-- 헤더 -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">출석 완료!</h2>
+                    </div>
+
+                    <!-- 닫기 버튼 -->
+                    <button class="close-button" onclick="closeModal()">
+                        <svg fill="none" viewBox="0 0 16 16">
+                            <path d="M12 4L4 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 4L12 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- 체크 아이콘 (녹색) -->
+                    <div class="modal-icon-container check-in">
+                        <svg fill="none" viewBox="0 0 48 48">
+                            <path d="M40 12L18 34L8 24" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                    <!-- 회원명 섹션 -->
+                    <div class="member-section">
+                        <p class="member-name">김회원님</p>
+                        <p class="status-message">출석이 완료되었습니다!</p>
+                    </div>
+
+                    <!-- 정보 카드 -->
+                    <div class="info-card">
+                        <div class="info-row">
+                            <span class="info-label">회원명</span>
+                            <span class="info-value">김회원</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">회원권</span>
+                            <span class="info-value-long">30일 이용권 + 30일 락커 이용권 + PT 10회 이용권</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">출석 일시</span>
+                            <span class="info-value">${dateTimeStr}</span>
+                        </div>
+                    </div>
+
+                    <!-- 확인 버튼 -->
+                    <button class="confirm-button" onclick="closeModal()">
+                        <span class="confirm-button-text">확인</span>
+                    </button>
+                `;
+            } else {
+                // 퇴장 완료 모달
+                modalHTML = `
+                    <!-- 헤더 -->
+                    <div class="modal-header">
+                        <h2 class="modal-title">퇴장 완료!</h2>
+                    </div>
+
+                    <!-- 닫기 버튼 -->
+                    <button class="close-button" onclick="closeModal()">
+                        <svg fill="none" viewBox="0 0 16 16">
+                            <path d="M12 4L4 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 4L12 12" stroke="#FFA366" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- 체크 아이콘 (빨간색) -->
+                    <div class="modal-icon-container check-out">
+                        <svg fill="none" viewBox="0 0 48 48">
+                            <path d="M40 12L18 34L8 24" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+
+                    <!-- 회원명 섹션 -->
+                    <div class="member-section">
+                        <p class="member-name">김회원님</p>
+                        <p class="status-message">퇴장이 완료되었습니다!</p>
+                    </div>
+
+                    <!-- 정보 카드 -->
+                    <div class="info-card">
+                        <div class="info-row">
+                            <span class="info-label">회원명</span>
+                            <span class="info-value">김회원</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">회원권</span>
+                            <span class="info-value-long">30일 이용권 + 30일 락커 이용권 + PT 10회 이용권</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">퇴장 일시</span>
+                            <span class="info-value">${dateTimeStr}</span>
+                        </div>
+                    </div>
+
+                    <!-- 확인 버튼 -->
+                    <button class="confirm-button" onclick="closeModal()">
+                        <span class="confirm-button-text">확인</span>
+                    </button>
+                `;
+            }
+            
+            modalContainer.innerHTML = modalHTML;
+            modalOverlay.classList.add('active');
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            modalContainer.innerHTML = '';
+            phoneInput.focus();
+        }
+
+        // 오버레이 클릭 시 모달 닫기
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // 뒤로가기
+        function goBack() {
+            window.history.back();
+        }
+
+        // 페이지 로드 시 포커스
+        window.addEventListener('load', function() {
+            phoneInput.focus();
+        });
+    </script>
+</body>
+</html>

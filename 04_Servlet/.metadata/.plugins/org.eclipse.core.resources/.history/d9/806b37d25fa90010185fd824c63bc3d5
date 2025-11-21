@@ -1,0 +1,5 @@
+package com.kh.jsp.controller.board;
+
+public class InsertController {
+
+}

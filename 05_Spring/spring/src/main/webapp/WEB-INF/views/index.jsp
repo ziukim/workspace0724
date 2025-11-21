@@ -1,16 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user1
-  Date: 25. 10. 20.
-  Time: 오후 5:17
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>트레이너 대시보드</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css">
+
 </head>
 <body>
-    안녕 spring은 처음이지
+<div class="app-container">
+    <!-- Sidebar Include -->
+    <jsp:include page="/WEB-INF/views/common/sidebar/sidebarTrainer.jsp" />
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>트레이너 대시보드</h1>
+        <!-- 페이지 내용 -->
+    </div>
+</div>
 </body>
 </html>
